@@ -1,0 +1,7 @@
+**/*.log
+**/*.pyc
+.idea
+.venv
+venv
+*.pyc
+.DS_Store

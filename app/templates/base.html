@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+{% block scripts %}
+    <!-- jQuery -->
+    <script src="{{ url_for('static', filename='js/lib/jquery-3.3.1.js' )}}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ url_for('static', filename='js/lib/bootstrap.js' )}}"></script>
+
+    <script type = "text/javascript" src="{{ url_for('static', filename='js/ethereum.js' )}}"> </script>
+{% endblock %}
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+        {% block css %}
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ url_for('static', filename='css/lib/bootstrap.css' )}}" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="{{ url_for('static', filename='font-awesome/css/fontawesome.css' )}}" rel="stylesheet" type="text/css">
+
+
+
+        {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+
+        {% block top_navbar %}
+
+
+            {% endblock %}
+    {% endblock %}
+</head>
+<body>
+
+
+<div id="content">
+    {% block content %}{% endblock %}
+</div>
+    <div id="footer">
+      {% block footer %}
+      Powered by Metamask.
+      {% endblock %}
+    </div>
+</body>
+</html>
