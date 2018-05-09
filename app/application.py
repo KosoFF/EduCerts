@@ -4,6 +4,13 @@ from flask import Flask, render_template
 from configuration import config as cf
 from app.views import frontend
 from app.views import api
+# At top of file
+from werkzeug.contrib.fixers import ProxyFix
+
+
+from app.mail import init_mail
+from app.security import init_security
+
 
 __all__ = ['create_app']
 
@@ -26,6 +33,9 @@ def create_app(config=None, app_name=None, blueprints=None):
     configure_logging(app)
     configure_template_filters(app)
     configure_error_handlers(app)
+    init_security(app)
+    init_mail(app)
+    app.wsgi_app = ProxyFix(app.wsgi_app, num_proxies=1)
     return app
 
 def configure_hook(app):
