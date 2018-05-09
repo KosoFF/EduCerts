@@ -3,9 +3,9 @@ from sqlalchemy import create_engine, MetaData, Table
 
 from sqlalchemy.orm import mapper, sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
+from configuration.config import SQLALCHEMY_DATABASE_URI
 
-
-engine = create_engine('postgres://zyfyaacx:Sots53T4Hheq7h2pygbKPTSsMNXdvjlt@dumbo.db.elephantsql.com:5432/zyfyaacx', echo=False)
+engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=False)
 session_for_sec = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 db_session = scoped_session(session_for_sec)
 
@@ -18,8 +18,7 @@ Base.query = db_session.query_property()
 from app.database import models
 def loadSession():
     metadata = Base.metadata
-    Session = sessionmaker(bind=engine, autoflush=False, autocommit=False)
-    session = Session()
+    session = session_for_sec()
     return session
 
 
