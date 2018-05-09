@@ -1,0 +1,19 @@
+
+{
+  "name": "educerts",
+  "env": {
+    "HEROKU": {
+      "required": true
+    },
+     "LOG_LEVEL": {
+      "value": "DEBUG"
+    }
+  },
+
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+
+}
