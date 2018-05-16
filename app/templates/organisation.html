@@ -1,0 +1,62 @@
+{% extends "./base.html" %}
+{% block title %}Organisation{% endblock %}
+{% block content %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/ethereum.js' ) }}"></script>
+    <div class="col-md-6 col-sm-12" style="max-width: 640px;">
+        <label class="hidden" id="ethereum_wallet">{{ eth_wallet }}</label>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Load certificate</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="cert-file">Certificate JSON file</label>
+                <input type="file" id="cert-file" aria-describedby="emailHelp"
+                       placeholder="Enter email">
+                <small id="file-help" class="form-text text-muted">File shall be correctly formatted.</small>
+            </div>
+
+            <div class="progress-bar progress-bar-info" role="progressbar" id="file-upload-progress-bar"
+                 aria-valuenow="0"
+                 aria-valuemin="0"
+                 aria-valuemax="100" style="width: 0; opacity: 100%">
+                <span class="sr-only">20% Complete</span>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <button id="send_json" type="button" class="btn btn-primary">Load</button>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="web3_error_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-danger" id="myModalLabel">Error</h4>
+                </div>
+                <div class="modal-body">
+                    Looks like there is no Web3 provider in your browser. Please, install one, or use Web3 browser
+                    (Mist).
+
+                    I suggest Metamask:
+                    <a target="_blank" href="https://metamask.io/">
+                        <img src="{{ url_for('static', filename='assets/download-metamask-dark.png') }}"
+                             alt="download metamask button dark" style="max-width:30%;">
+                    </a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}

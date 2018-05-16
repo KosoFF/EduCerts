@@ -4,6 +4,7 @@ from logger import c_logger as log
 from sqlalchemy.engine.url import make_url
 
 
+
 #initialization
 IS_HEROKU = False
 try:
@@ -26,12 +27,15 @@ CSRF_ENABLED = True
 SECURITY_REGISTERABLE = True
 SECURITY_PASSWORD_SALT = 'some_very_strong_and_stupid_text'
 SECURITY_DEFAULT_REMEMBER_ME = True
-
+SECURITY_TRACKABLE = True
 SECURITY_CONFIRMABLE= False
 SECURITY_LOGIN_WITHOUT_CONFIRMATION = True
 SECURITY_SEND_REGISTER_EMAIL=False #testing
 
 
+#Ethereum account
+ACCOUNT_ADDRESS='0x11eaDA0f2416d3C79faEB2cD70D26556F0b3EDeB'
+ETHERSCAN_API_KEY='IMHHCJ323XDZ3AJIPFEMYCEMP5TBC7RHPY'
 
 #MAIL
 MAIL_SERVER = 'smtp.mail.ru'

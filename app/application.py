@@ -1,40 +1,50 @@
 
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 # from flask.ext.sqlalchemy import SQLAlchemy
 from configuration import config as cf
-from app.views import frontend
-from app.views import api
+from flask_login import current_user
 # At top of file
 from werkzeug.contrib.fixers import ProxyFix
+
 
 
 from app.mail import init_mail
 from app.security import init_security
 
 
+
+
 __all__ = ['create_app']
 
-DEFAULT_BLUEPRINTS = (
-    frontend,
-    api,
-)
+
 
 
 def create_app(config=None, app_name=None, blueprints=None):
     if app_name is None:
         app_name = cf.APP_NAME
-    if blueprints is None:
-        blueprints = DEFAULT_BLUEPRINTS
+
     app = Flask(app_name, template_folder='app/templates', static_folder='app/static')
     configure_app(app, config)
+
+    init_security(app)
+    init_mail(app)
+
+    from app.views import frontend
+    from app.views import api
+    DEFAULT_BLUEPRINTS = (
+        frontend,
+        api
+    )
+    if blueprints is None:
+        blueprints = DEFAULT_BLUEPRINTS
+
     configure_hook(app)
     configure_blueprints(app, blueprints)
     configure_extensions(app)
     configure_logging(app)
     configure_template_filters(app)
     configure_error_handlers(app)
-    init_security(app)
-    init_mail(app)
+
     app.wsgi_app = ProxyFix(app.wsgi_app, num_proxies=1)
     return app
 
@@ -42,6 +52,16 @@ def configure_hook(app):
     @app.before_request
     def before_request():
         pass
+    from app.security import user_datastore
+    @app.after_request
+    def after_request(req):
+        user_datastore.commit()
+        return req
+
+    @app.context_processor
+    def inject_user():
+        return dict(current_user=current_user)
+
 
 def configure_app(app, config):
     """Configure app from object, parameter and env."""
@@ -81,3 +101,6 @@ def configure_error_handlers(app):
     # @app.errorhandler(403)
     # def forbidden_page(error):
 #     return render_template("errors/forbidden_page.html"), 403
+
+
+
